@@ -3,82 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aromahpure Dashboard</title>
+    <title>Aromahpure Analytics | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg: #fdfafb;
             --card: #ffffff;
-            --primary-red: #B91C1C; /* Elegant deep red */
+            --primary-red: #B91C1C; 
             --light-red: #FEF2F2;
             --text-main: #1f2937;
             --text-muted: #6b7280;
             --border: #fca5a5;
             --shadow: 0 10px 20px -5px rgba(185, 28, 28, 0.08);
+            --section-spacing: 5rem; /* Creates the elegant breathing room */
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
         
-        /* Premium Header */
+        /* Header */
         header { 
-            background: var(--card); padding: 1.5rem 2rem; display: flex; justify-content: space-between; 
+            background: var(--card); padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; 
             align-items: center; border-bottom: 2px solid var(--primary-red); position: sticky; top: 0; z-index: 10;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px -1px rgba(0,0,0,0.05);
         }
         .logo-section { display: flex; align-items: center; gap: 15px; }
         header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-red); margin: 0; }
         .badges { display: flex; gap: 10px; }
-        .badge { font-size: 0.75rem; background: var(--light-red); color: var(--primary-red); padding: 6px 14px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); }
+        .badge { font-size: 0.8rem; background: var(--light-red); color: var(--primary-red); padding: 8px 16px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); }
         
-        /* Banner Image Placeholder */
+        /* Banner */
         .banner {
-            width: 100%; height: 180px;
+            width: 100%; height: 220px;
             background-image: url('https://images.unsplash.com/photo-1602928321679-560bb453f190?q=80&w=2000&auto=format&fit=crop'); 
             background-size: cover; background-position: center;
             position: relative;
         }
         .banner-overlay {
-            position: absolute; inset: 0; background: linear-gradient(to right, rgba(185, 28, 28, 0.8), rgba(0,0,0,0.1));
-            display: flex; align-items: center; padding-left: 2rem;
+            position: absolute; inset: 0; background: linear-gradient(to right, rgba(185, 28, 28, 0.9), rgba(0,0,0,0.2));
+            display: flex; align-items: center; padding-left: 3rem;
         }
-        .banner-text { color: white; font-family: 'Playfair Display', serif; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .banner-text { color: white; font-family: 'Playfair Display', serif; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
-        /* Elegant Moving Insights Ticker */
+        /* Ticker */
         .insights-ticker { 
-            background: var(--primary-red); color: white; padding: 14px 20px; font-size: 0.95rem; font-weight: 600; 
+            background: var(--primary-red); color: white; padding: 16px 24px; font-size: 1rem; font-weight: 600; 
             display: flex; gap: 20px; overflow: hidden; white-space: nowrap; border-top: 1px solid white;
-            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
         }
-        .insights-ticker .prefix { display: inline-block; flex-shrink: 0; }
+        .insights-ticker .prefix { display: inline-block; flex-shrink: 0; color: #fca5a5; }
         .insights-ticker marquee { flex-grow: 1; margin: 0; padding: 0; }
-        .insight-item { display: inline-block; margin: 0 20px; }
+        .insight-item { display: inline-block; margin: 0 30px; }
         
-        .container { max-width: 1300px; margin: 2rem auto; padding: 0 1.5rem; }
+        .container { max-width: 1400px; margin: 3rem auto; padding: 0 2rem; }
         
-        .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary-red); margin: 3rem 0 1.5rem 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .section-subtitle { font-size: 1.1rem; color: var(--primary-red); font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
-
-        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .card { background: var(--card); border: 1px solid #fee2e2; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); transition: 0.3s; border-top: 4px solid var(--primary-red); }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 15px 25px -5px rgba(185, 28, 28, 0.15); }
-        .kpi-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.5px; }
-        .kpi-value { font-size: 2.2rem; font-weight: 700; color: var(--text-main); }
+        /* Spacing and Layout */
+        .dashboard-section { margin-bottom: var(--section-spacing); padding-bottom: 2rem; border-bottom: 1px solid #fee2e2; }
+        .dashboard-section:last-child { border-bottom: none; }
         
-        .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .chart-container { height: 320px; width: 100%; position: relative; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary-red); margin: 0 0 2rem 0; display: flex; align-items: center; gap: 15px;}
+        .section-subtitle { font-size: 1.2rem; color: var(--primary-red); font-weight: 700; margin: 3rem 0 1.5rem 0; }
 
-        /* Table and List Styles */
-        .dynamic-table { width: 100%; border-collapse: collapse; margin-top: 1rem; border: 1px solid var(--border); background: var(--card); }
-        .dynamic-table th { background: var(--primary-red); color: white; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; padding: 12px; text-align: left; }
-        .dynamic-table td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-main); font-size: 0.9rem; }
-        .dynamic-table tr:nth-child(even) { background-color: var(--light-red); }
-        .dynamic-table tr:hover { background-color: #fee2e2; }
+        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .card { background: var(--card); border: 1px solid #fee2e2; border-radius: 16px; padding: 2rem; box-shadow: var(--shadow); transition: 0.3s; border-top: 5px solid var(--primary-red); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -5px rgba(185, 28, 28, 0.15); }
+        .kpi-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; letter-spacing: 1px; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--text-main); }
+        
+        .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
+        .chart-container { height: 350px; width: 100%; position: relative; margin-top: 1rem; }
 
-        .insight-card-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-        .insight-card { background: var(--card); border: 1px solid #fee2e2; border-radius: 8px; padding: 1rem 1.5rem; box-shadow: var(--shadow); border-left: 5px solid var(--primary-red); color: var(--text-main); font-size: 0.95rem; line-height: 1.5; }
+        /* Tables & Lists */
+        .dynamic-table { width: 100%; border-collapse: collapse; border: 1px solid #fee2e2; background: var(--card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+        .dynamic-table th { background: var(--primary-red); color: white; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; padding: 16px; text-align: left; }
+        .dynamic-table td { border-bottom: 1px solid #fee2e2; padding: 14px 16px; color: var(--text-main); font-size: 0.95rem; }
+        .dynamic-table tr:nth-child(even) { background-color: var(--bg); }
+        .dynamic-table tr:hover { background-color: #fef2f2; }
+
+        .insight-card-list { display: flex; flex-direction: column; gap: 1.2rem; }
+        .insight-card { background: var(--card); border: 1px solid #fee2e2; border-radius: 10px; padding: 1.2rem 2rem; box-shadow: var(--shadow); border-left: 6px solid var(--primary-red); color: var(--text-main); font-size: 1.05rem; line-height: 1.6; font-weight: 600; }
 
         #loading-overlay { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
-        .spinner { width: 40px; height: 40px; border: 4px solid var(--light-red); border-top: 4px solid var(--primary-red); border-radius: 50%; animation: spin 1s linear infinite; }
+        .spinner { width: 50px; height: 50px; border: 4px solid var(--light-red); border-top: 4px solid var(--primary-red); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -86,12 +90,12 @@
 
     <div id="loading-overlay">
         <div class="spinner"></div>
-        <p style="margin-top: 15px; font-weight: 600; color: var(--primary-red);">Syncing Live Data...</p>
+        <p style="margin-top: 20px; font-weight: 600; font-size: 1.1rem; color: var(--primary-red);">Syncing Aromahpure Data...</p>
     </div>
 
     <header>
         <div class="logo-section">
-            <h1>Aromahpure Dashboard</h1>
+            <h1>Aromahpure Workspace</h1>
         </div>
         <div class="badges">
             <div class="badge">Admin: Sanskar</div>
@@ -102,313 +106,257 @@
 
     <div class="banner">
         <div class="banner-overlay">
-            <div class="banner-text">Performance Workspace</div>
+            <div class="banner-text">Performance Dashboard</div>
         </div>
     </div>
 
     <div class="insights-ticker">
-        <span class="prefix">🔥 LATEST INSIGHTS:</span>
-        <marquee behavior="scroll" direction="left" scrollamount="6" loop="infinite" onmouseover="this.stop();" onmouseout="this.start();">
-            <span id="marquee-insight-1" class="insight-item">Syncing comparative analytics...</span> &nbsp;
-            <span id="marquee-insight-2" class="insight-item"></span> &nbsp;
+        <span class="prefix">⚡ LATEST INSIGHTS:</span>
+        <marquee behavior="scroll" direction="left" scrollamount="7" onmouseover="this.stop();" onmouseout="this.start();">
+            <span id="marquee-insight-1" class="insight-item">Syncing analytics...</span>
+            <span id="marquee-insight-2" class="insight-item"></span>
             <span id="marquee-insight-3" class="insight-item"></span>
+            <span id="marquee-insight-4" class="insight-item"></span>
         </marquee>
     </div>
 
     <div class="container">
-        <div class="section-title">Gel Wink Engagement</div>
-        <div class="grid-kpi">
-            <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wink-sessions">0</div></div>
-            <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wink-unique">0</div></div>
-            <div class="card"><div class="kpi-label">Scroll Depth</div><div class="kpi-value" id="wink-scroll">0%</div></div>
-            <div class="card"><div class="kpi-label">Avg Duration</div><div class="kpi-value" id="wink-duration">0s</div></div>
-        </div>
-        <div class="section-subtitle">Key Performance Insights (Gel Wink)</div>
-        <div id="wink-insights-list" class="insight-card-list"></div>
-        <div class="section-subtitle">Gel Wink Hourly Activity (Live Table)</div>
-        <div id="wink-hourly-table-container"></div>
-
-        <div class="section-title">Gel Wave Engagement</div>
-        <div class="grid-kpi">
-            <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wave-sessions">0</div></div>
-            <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wave-unique">0</div></div>
-            <div class="card"><div class="kpi-label">Scroll Depth</div><div class="kpi-value" id="wave-scroll">0%</div></div>
-            <div class="card"><div class="kpi-label">Peak Session</div><div class="kpi-value" id="wave-peak">--</div></div>
-        </div>
-        <div class="section-subtitle">Key Performance Insights (Gel Wave)</div>
-        <div id="wave-insights-list" class="insight-card-list"></div>
         
-        <div class="chart-grid">
-            <div class="card">
-                <div class="kpi-label">Platform Performance (Gel Wave Clicks)</div>
-                <div class="chart-container"><canvas id="wavePlatformChart"></canvas></div>
+        <div class="dashboard-section">
+            <h2 class="section-title">Gel Wink Engagement</h2>
+            <div class="grid-kpi">
+                <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wink-sessions">0</div></div>
+                <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wink-unique">0</div></div>
+                <div class="card"><div class="kpi-label">Scroll Depth</div><div class="kpi-value" id="wink-scroll">0%</div></div>
+                <div class="card"><div class="kpi-label">Avg Duration</div><div class="kpi-value" id="wink-duration">0s</div></div>
             </div>
-            <div class="card">
-                <div class="kpi-label">Gel Wave Peak Hours</div>
-                <div id="wave-peak-table-container"></div>
+            
+            <h3 class="section-subtitle">Key Performance Insights</h3>
+            <div id="wink-insights-list" class="insight-card-list"></div>
+            
+            <h3 class="section-subtitle">Hourly Activity</h3>
+            <div id="wink-hourly-table-container"></div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2 class="section-title">Gel Wave Engagement</h2>
+            <div class="grid-kpi">
+                <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wave-sessions">0</div></div>
+                <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wave-unique">0</div></div>
+                <div class="card"><div class="kpi-label">Scroll Depth</div><div class="kpi-value" id="wave-scroll">0%</div></div>
+                <div class="card"><div class="kpi-label">Peak Session Time</div><div class="kpi-value" id="wave-peak">--</div></div>
+            </div>
+
+            <h3 class="section-subtitle">Key Performance Insights</h3>
+            <div id="wave-insights-list" class="insight-card-list"></div>
+            
+            <div class="chart-grid" style="margin-top: 3rem;">
+                <div class="card">
+                    <div class="kpi-label">Platform Performance Clicks</div>
+                    <div class="chart-container"><canvas id="wavePlatformChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="kpi-label">Peak Hours Timeline</div>
+                    <div id="wave-peak-table-container" style="margin-top: 1.5rem;"></div>
+                </div>
             </div>
         </div>
 
-        <div class="section-title">Gel Wave QR Scan Insights</div>
-        <div class="grid-kpi">
-            <div class="card"><div class="kpi-label">Total Scans</div><div class="kpi-value" id="wave-qr-total">0</div></div>
-            <div class="card"><div class="kpi-label">Top State</div><div class="kpi-value" style="font-size:1.6rem; color:var(--primary-red);" id="wave-qr-state">--</div></div>
-            <div class="card"><div class="kpi-label">Top City</div><div class="kpi-value" style="font-size:1.6rem;" id="wave-qr-city">--</div></div>
-            <div class="card"><div class="kpi-label">Top Device</div><div class="kpi-value" style="font-size:1.6rem;" id="wave-qr-device">--</div></div>
+        <div class="dashboard-section">
+            <h2 class="section-title">Gel Wave QR Scans</h2>
+            <div class="grid-kpi">
+                <div class="card"><div class="kpi-label">Total Scans</div><div class="kpi-value" id="wave-qr-total">0</div></div>
+                <div class="card"><div class="kpi-label">Top State</div><div class="kpi-value" style="color:var(--primary-red);" id="wave-qr-state">--</div></div>
+                <div class="card"><div class="kpi-label">Top City</div><div class="kpi-value" id="wave-qr-city">--</div></div>
+                <div class="card"><div class="kpi-label">Top Device</div><div class="kpi-value" id="wave-qr-device">--</div></div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="card">
+                    <div class="kpi-label">Top States by Scans</div>
+                    <div class="chart-container"><canvas id="qrStatesChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="kpi-label">Top Cities by Scans</div>
+                    <div class="chart-container"><canvas id="qrCitiesChart"></canvas></div>
+                </div>
+            </div>
+            
+            <div class="chart-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+                 <div class="card">
+                    <div class="kpi-label">Device Breakdown</div>
+                    <div class="chart-container"><canvas id="waveDeviceChart"></canvas></div>
+                </div>
+            </div>
         </div>
 
-        <div class="chart-grid">
-            <div class="card">
-                <div class="kpi-label">Top States by Scans</div>
-                <div class="chart-container"><canvas id="qrStatesChart"></canvas></div>
-            </div>
-            <div class="card">
-                <div class="kpi-label">Top Cities by Scans</div>
-                <div class="chart-container"><canvas id="qrCitiesChart"></canvas></div>
-            </div>
-        </div>
-        
-        <div class="chart-grid">
-             <div class="card">
-                <div class="kpi-label">Device Breakdown (QR Scans)</div>
-                <div class="chart-container"><canvas id="waveDeviceChart"></canvas></div>
-            </div>
-            </div>
+        <div class="dashboard-section">
+            <h2 class="section-title">Product Comparison & Distribution</h2>
+            <h3 class="section-subtitle">Comparative Summary</h3>
+            <div id="comp-insights-list" class="insight-card-list"></div>
 
-        <div class="section-title">Product Comparison & Distribution</div>
-        <div class="section-subtitle">Comparative Key Insights</div>
-        <div id="comp-insights-list" class="insight-card-list"></div>
-
-        <div class="chart-grid">
-            <div class="card">
-                <div class="kpi-label">Comparative Scorecards (Gel Wink vs Gel Wave)</div>
-                <div class="chart-container"><canvas id="scorecardsChart"></canvas></div>
-            </div>
-            <div class="card">
-                <div class="kpi-label">Channel Distribution</div>
-                <div class="chart-container"><canvas id="channelDistChart"></canvas></div>
+            <div class="chart-grid" style="margin-top: 3rem;">
+                <div class="card">
+                    <div class="kpi-label">Comparative Overview</div>
+                    <div class="chart-container"><canvas id="scorecardsChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="kpi-label">Channel Distribution Matrix</div>
+                    <div class="chart-container"><canvas id="channelDistChart"></canvas></div>
+                </div>
             </div>
         </div>
         
     </div>
 
     <script>
-        // Use your specific Web App URL
         const API_URL = 'https://script.google.com/macros/s/AKfycbzGHebn0mYbzIOp6P8qJmNRtRGyhf7_Myij-v4pAeeW5M-PHN7Bg9i3cjIKklEJswpY/exec';
 
         async function initDashboard() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                const liveData = data[0]; 
+                const live = data[0]; 
                 
-                // --- KPI & INSIGHTS MAPPING ---
+                // --- KPI MAPPING (Using raw text to prevent format breaking) ---
+                document.getElementById('wink-sessions').innerText = live.winkSessions || "0";
+                document.getElementById('wink-unique').innerText = live.winkUnique || "0";
+                document.getElementById('wink-scroll').innerText = (live.winkScroll || "0").includes('%') ? live.winkScroll : live.winkScroll * 100 + "%";
+                document.getElementById('wink-duration').innerText = live.winkDuration || "0";
                 
-                // Gel Wink KPIs
-                document.getElementById('wink-sessions').innerText = liveData.winkSessions || "0";
-                document.getElementById('wink-unique').innerText = liveData.winkUnique || "0";
-                if(liveData.winkScroll) document.getElementById('wink-scroll').innerText = (liveData.winkScroll * 100).toFixed(0) + "%";
-                if(liveData.winkDuration) document.getElementById('wink-duration').innerText = parseFloat(liveData.winkDuration).toFixed(1) + "s";
+                document.getElementById('wave-sessions').innerText = live.waveSessions || "0"; 
+                document.getElementById('wave-unique').innerText = live.waveUnique || "0"; 
+                document.getElementById('wave-scroll').innerText = (live.waveScroll || "0").includes('%') ? live.waveScroll : live.waveScroll * 100 + "%";
+                document.getElementById('wave-peak').innerText = live.wavePeakHourText || "--";
                 
-                // Gel Wave KPIs
-                document.getElementById('wave-sessions').innerText = liveData.waveSessions || "0"; 
-                document.getElementById('wave-unique').innerText = liveData.waveUnique || "0"; 
-                if(liveData.waveScroll) document.getElementById('wave-scroll').innerText = (liveData.waveScroll * 100).toFixed(0) + "%";
-                document.getElementById('wave-peak').innerText = liveData.wavePeakHourText || "--";
-                
-                // Gel Wave QR KPIs
-                document.getElementById('wave-qr-total').innerText = liveData.waveQrTotal || "0";
-                document.getElementById('wave-qr-state').innerText = liveData.waveQrTopState || "--";
-                document.getElementById('wave-qr-city').innerText = liveData.waveQrTopCity || "--";
-                document.getElementById('wave-qr-device').innerText = liveData.waveQrTopDevice || "--";
+                document.getElementById('wave-qr-total').innerText = live.waveQrTotal || "0";
+                document.getElementById('wave-qr-state').innerText = live.waveQrTopState || "--";
+                document.getElementById('wave-qr-city').innerText = live.waveQrTopCity || "--";
+                document.getElementById('wave-qr-device').innerText = live.waveQrTopDevice || "--";
 
-                // --- POPULATE LIVE INSIGHTS ---
-                
-                // Marquee Ticker (Comparative insights 1, 2, 3)
-                if(liveData.compInsightsRange) {
-                    document.getElementById('marquee-insight-1').innerText = liveData.compInsightsRange[0][0];
-                    document.getElementById('marquee-insight-2').innerText = liveData.compInsightsRange[1][0];
-                    document.getElementById('marquee-insight-3').innerText = liveData.compInsightsRange[2][0];
+                // --- INSIGHTS ---
+                if(live.compInsightsRange && live.compInsightsRange.length >= 4) {
+                    document.getElementById('marquee-insight-1').innerText = live.compInsightsRange[0][0];
+                    document.getElementById('marquee-insight-2').innerText = live.compInsightsRange[1][0];
+                    document.getElementById('marquee-insight-3').innerText = live.compInsightsRange[2][0];
+                    document.getElementById('marquee-insight-4').innerText = live.compInsightsRange[3][0];
                 }
 
-                // Gel Wink Insights Section
-                populateInsightsList(liveData.winkInsightsRange, 'wink-insights-list');
-                // Gel Wave Insights Section
-                populateInsightsList(liveData.waveInsightsRange, 'wave-insights-list');
-                // Product Comparison Insights Section (Comparative insights 4-10)
-                const comparativeInsightsSubset = liveData.compInsightsRange ? liveData.compInsightsRange.slice(3) : [];
-                populateInsightsList(comparativeInsightsSubset, 'comp-insights-list');
+                populateInsightsList(live.winkInsightsRange, 'wink-insights-list');
+                populateInsightsList(live.waveInsightsRange, 'wave-insights-list');
+                const compSubset = live.compInsightsRange ? live.compInsightsRange.slice(4) : [];
+                populateInsightsList(compSubset, 'comp-insights-list');
 
-                // --- POPULATE LIVE TABLES ---
-                
-                // Gel Wink Hourly Table
-                populateTable(liveData.winkHourlyRange, ['Hour', 'Sessions', 'Platform Clicks', 'QR Scans'], 'wink-hourly-table-container');
-                // Gel Wave Peak Hours Table
-                populateTable(liveData.wavePeakHoursRange, ['Hour', 'Sessions'], 'wave-peak-table-container');
+                // --- TABLES ---
+                populateTable(live.winkHourlyRange, ['Hour', 'Sessions', 'Platform Clicks', 'QR Scans'], 'wink-hourly-table-container');
+                populateTable(live.wavePeakHoursRange, ['Hour', 'Sessions'], 'wave-peak-table-container');
 
-                // --- POPULATE CHARTS (Dynamic) ---
-                renderCharts(liveData);
+                // --- CHARTS ---
+                renderCharts(live);
 
                 document.getElementById('loading-overlay').style.display = 'none';
             } catch (error) {
                 console.error("Fetch failed", error);
-                document.getElementById('loading-overlay').innerHTML = "<p style='color:var(--primary-red);'>Error loading data. Manager alert: Check console.</p>";
+                document.getElementById('loading-overlay').innerHTML = "<p style='color:var(--primary-red); font-weight:bold;'>Data Sync Error. Please check the Web App URL.</p>";
             }
         }
 
-        // --- HELPER FUNCTIONS FOR TABLES & INSIGHTS ---
         function populateInsightsList(rangeData, containerId) {
             const container = document.getElementById(containerId);
             if (!container || !rangeData) return;
             container.innerHTML = rangeData.map(row => {
-                const text = row[0].toString().trim();
-                return text && text.length > 2 ? `<li class="insight-card">${text}</li>` : '';
+                const text = row[0] ? row[0].toString().trim() : '';
+                return text.length > 2 ? `<div class="insight-card">${text}</div>` : '';
             }).join('');
         }
 
         function populateTable(rangeData, headers, containerId) {
             const container = document.getElementById(containerId);
             if (!container || !rangeData) return;
-            let tableHtml = `<table class="dynamic-table">`;
-            tableHtml += `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
-            tableHtml += `<tbody>`;
-            tableHtml += rangeData.map(row => {
-                 // only add rows that have content in col 1
-                 if(row[0]) return `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+            let html = `<table class="dynamic-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+            html += rangeData.map(row => {
+                 if(row[0]) return `<tr>${row.map(cell => `<td>${cell || '-'}</td>`).join('')}</tr>`;
                  return '';
             }).join('');
-            tableHtml += `</tbody></table>`;
-            container.innerHTML = tableHtml;
+            html += `</tbody></table>`;
+            container.innerHTML = html;
         }
 
-        // --- CHART RENDERING (DYNAMIC SOURCE) ---
-        function renderCharts(liveData) {
-            // Setup global chart styling for the elegant Red theme
+        function parseNum(val) { return parseFloat(val) || 0; }
+
+        function renderCharts(live) {
             Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
             Chart.defaults.color = '#6b7280';
-            Chart.defaults.elements.bar.borderRadius = 6;
 
-            // 1. Comparative Scorecards (Bar chart of key stats Wink vs Wave)
-            const ctxScorecards = document.getElementById('scorecardsChart').getContext('2d');
-            new Chart(ctxScorecards, {
+            // 1. Comparative Scorecards
+            new Chart(document.getElementById('scorecardsChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Total Sessions', 'QR Scans', 'Avg Scroll Depth (%)', 'Avg Duration (s)'],
+                    labels: ['Sessions', 'Avg Duration'],
                     datasets: [
-                        { 
-                            label: 'Gel Wink', 
-                            data: [liveData.winkSessions || 103, 190, 32, liveData.winkDuration || 16.8], 
-                            backgroundColor: '#B91C1C' 
-                        },
-                        { 
-                            label: 'Gel Wave', 
-                            data: [liveData.waveSessions || 57, liveData.waveQrTotal || 27, 42, 20.6], 
-                            backgroundColor: '#f87171' 
-                        }
+                        { label: 'Gel Wink', data: [parseNum(live.winkSessions), parseNum(live.winkDuration)], backgroundColor: '#B91C1C' },
+                        { label: 'Gel Wave', data: [parseNum(live.waveSessions), parseNum(live.waveScroll)*100], backgroundColor: '#fca5a5' }
                     ]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { 
-                        legend: { position: 'top' },
-                    },
-                    scales: {
-                        y: { 
-                            title: { display: true, text: 'Value' }
-                        }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // 2. Gel Wave Platform Performance Bar Chart
-            const ctxWavePlatform = document.getElementById('wavePlatformChart').getContext('2d');
-            const platformClicks = liveData.wavePlatformClicks;
-            new Chart(ctxWavePlatform, {
+            // 2. Wave Platforms
+            const pc = live.wavePlatformClicks || { "Amazon": 0, "Aromahpure": 0, "Flipkart": 0 };
+            new Chart(document.getElementById('wavePlatformChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: Object.keys(platformClicks),
-                    datasets: [{ label: 'Clicks', data: Object.values(platformClicks), backgroundColor: ['#B91C1C', '#f87171', '#1f2937'] }]
+                    labels: Object.keys(pc),
+                    datasets: [{ label: 'Clicks', data: Object.values(pc).map(parseNum), backgroundColor: ['#B91C1C', '#f87171', '#1f2937'] }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // 3. QR Scan State Chart (Horizontal bar)
-            const ctxQrStates = document.getElementById('qrStatesChart').getContext('2d');
-            const statesData = liveData.waveQrStatesRange ? liveData.waveQrStatesRange.map(row => row[2]) : [0,0,0,0,0,0]; // scans are col 3
-            const statesLabels = liveData.waveQrStatesRange ? liveData.waveQrStatesRange.map(row => row[1]) : ['','','','','','']; // states are col 2
-            new Chart(ctxQrStates, {
+            // 3. QR States
+            const states = live.waveQrStatesRange || [];
+            new Chart(document.getElementById('qrStatesChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: statesLabels,
-                    datasets: [{ label: 'Scans', data: statesData, backgroundColor: '#B91C1C' }]
+                    labels: states.map(r => r[0]),
+                    datasets: [{ label: 'Scans', data: states.map(r => parseNum(r[1])), backgroundColor: '#B91C1C' }]
                 },
-                options: { 
-                    indexAxis: 'y', // Makes it horizontal
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { x: { title: { display: true, text: 'Scan Count' } } }
-                }
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-             // 4. QR Scan City Chart (Horizontal bar)
-            const ctxQrCities = document.getElementById('qrCitiesChart').getContext('2d');
-            const citiesData = liveData.waveQrCitiesRange ? liveData.waveQrCitiesRange.map(row => row[2]) : [0,0,0,0,0,0]; // scans are col 3
-            const citiesLabels = liveData.waveQrCitiesRange ? liveData.waveQrCitiesRange.map(row => row[1]) : ['','','','','','']; // cities are col 2
-            new Chart(ctxQrCities, {
+            // 4. QR Cities
+            const cities = live.waveQrCitiesRange || [];
+            new Chart(document.getElementById('qrCitiesChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: citiesLabels,
-                    datasets: [{ label: 'Scans', data: citiesData, backgroundColor: '#f87171' }]
+                    labels: cities.map(r => r[0]),
+                    datasets: [{ label: 'Scans', data: cities.map(r => parseNum(r[1])), backgroundColor: '#f87171' }]
                 },
-                options: { 
-                    indexAxis: 'y', // Makes it horizontal
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { x: { title: { display: true, text: 'Scan Count' } } }
-                }
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // 5. Updated Device Breakdown (Now dynamic)
-            const ctxDevice = document.getElementById('waveDeviceChart').getContext('2d');
-            const devicesData = liveData.waveQrDevicesRange ? liveData.waveQrDevicesRange.map(row => row[2]) : [0,0,0]; // scans are col 3
-            const devicesLabels = liveData.waveQrDevicesRange ? liveData.waveQrDevicesRange.map(row => row[1]) : ['Mobile', 'PC', 'Tablet']; // devices are col 2
-            new Chart(ctxDevice, {
+            // 5. QR Devices
+            const devices = live.waveQrDevicesRange || [];
+            new Chart(document.getElementById('waveDeviceChart').getContext('2d'), {
                 type: 'doughnut',
                 data: {
-                    labels: devicesLabels,
-                    datasets: [{ data: devicesData, backgroundColor: ['#B91C1C', '#1f2937', '#fca5a5'], borderWidth: 0 }]
+                    labels: devices.map(r => r[0]),
+                    datasets: [{ data: devices.map(r => parseNum(r[1])), backgroundColor: ['#B91C1C', '#1f2937', '#fca5a5'], borderWidth: 0 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' } } }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%' }
             });
 
-            // 6. Channel Distribution Grouped Horizontal Bar Chart
-            const ctxChannel = document.getElementById('channelDistChart').getContext('2d');
-            const channelRange = liveData.channelTableRange;
-            const channelLabels = channelRange ? channelRange.slice(1).map(row => row[0]) : [];
-            const winkChannelData = channelRange ? channelRange.slice(1).map(row => row[1]) : [];
-            const waveChannelData = channelRange ? channelRange.slice(1).map(row => row[2]) : [];
-            new Chart(ctxChannel, {
+            // 6. Channel Dist
+            const channels = live.channelTableRange || [];
+            new Chart(document.getElementById('channelDistChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: channelLabels,
+                    labels: channels.map(r => r[0]),
                     datasets: [
-                        { label: 'Gel Wink', data: winkChannelData, backgroundColor: '#B91C1C' },
-                        { label: 'Gel Wave', data: waveChannelData, backgroundColor: '#f87171' }
+                        { label: 'Gel Wink', data: channels.map(r => parseNum(r[1])), backgroundColor: '#B91C1C' },
+                        { label: 'Gel Wave', data: channels.map(r => parseNum(r[2])), backgroundColor: '#fca5a5' }
                     ]
                 },
-                options: { 
-                    indexAxis: 'y', // Makes it horizontal
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { position: 'top' } },
-                    scales: {
-                        x: { stacked: false, title: { display: true, text: 'Metric Value' } },
-                        y: { stacked: false, title: { display: true, text: 'Channel' } }
-                    }
-                }
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
             });
         }
 
