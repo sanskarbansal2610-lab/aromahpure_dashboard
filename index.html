@@ -16,14 +16,14 @@
             --text-muted: #6b7280;
             --border: #fca5a5;
             --shadow: 0 10px 20px -5px rgba(185, 28, 28, 0.08);
-            --section-spacing: 5rem; /* Creates the elegant breathing room */
+            --section-spacing: 5rem;
         }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 0; overflow-x: hidden; }
         
         /* Header */
         header { 
             background: var(--card); padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; 
-            align-items: center; border-bottom: 2px solid var(--primary-red); position: sticky; top: 0; z-index: 10;
+            align-items: center; border-bottom: 2px solid var(--primary-red); position: sticky; top: 0; z-index: 50;
             box-shadow: 0 4px 15px -1px rgba(0,0,0,0.05);
         }
         .logo-section { display: flex; align-items: center; gap: 15px; }
@@ -31,31 +31,42 @@
         .badges { display: flex; gap: 10px; }
         .badge { font-size: 0.8rem; background: var(--light-red); color: var(--primary-red); padding: 8px 16px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); }
         
-        /* Banner */
+        /* Banner - Updated to Reed Diffuser / Candle aesthetic */
         .banner {
-            width: 100%; height: 220px;
-            background-image: url('https://images.unsplash.com/photo-1602928321679-560bb453f190?q=80&w=2000&auto=format&fit=crop'); 
-            background-size: cover; background-position: center;
+            width: 100%; height: 260px;
+            background-image: url('https://images.unsplash.com/photo-1596433809252-260c27459d22?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover; background-position: center 60%;
             position: relative;
         }
         .banner-overlay {
-            position: absolute; inset: 0; background: linear-gradient(to right, rgba(185, 28, 28, 0.9), rgba(0,0,0,0.2));
+            position: absolute; inset: 0; background: linear-gradient(to right, rgba(100, 10, 10, 0.85), rgba(0,0,0,0.3));
             display: flex; align-items: center; padding-left: 3rem;
         }
-        .banner-text { color: white; font-family: 'Playfair Display', serif; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .banner-text { color: white; font-family: 'Playfair Display', serif; font-size: 3.2rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.6); }
 
-        /* Ticker */
-        .insights-ticker { 
-            background: var(--primary-red); color: white; padding: 16px 24px; font-size: 1rem; font-weight: 600; 
-            display: flex; gap: 20px; overflow: hidden; white-space: nowrap; border-top: 1px solid white;
+        /* Pure CSS Scrolling Ticker - Smooth and Bug-Free */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; background: var(--primary-red); color: white; 
+            display: flex; align-items: center; border-top: 2px solid #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .insights-ticker .prefix { display: inline-block; flex-shrink: 0; color: #fca5a5; }
-        .insights-ticker marquee { flex-grow: 1; margin: 0; padding: 0; }
-        .insight-item { display: inline-block; margin: 0 30px; }
+        .ticker-prefix {
+            padding: 16px 24px; font-weight: 700; font-size: 1rem; color: #fca5a5;
+            background: var(--primary-red); z-index: 2; white-space: nowrap; box-shadow: 5px 0 10px rgba(185, 28, 28, 1);
+        }
+        .ticker-viewport {
+            flex-grow: 1; overflow: hidden; white-space: nowrap;
+        }
+        .ticker-content {
+            display: inline-block; white-space: nowrap; padding-left: 100%;
+            animation: scroll-left 35s linear infinite; font-size: 1rem; font-weight: 600;
+        }
+        .ticker-viewport:hover .ticker-content { animation-play-state: paused; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .insight-item { display: inline-block; margin-right: 60px; }
         
         .container { max-width: 1400px; margin: 3rem auto; padding: 0 2rem; }
         
-        /* Spacing and Layout */
+        /* Layout */
         .dashboard-section { margin-bottom: var(--section-spacing); padding-bottom: 2rem; border-bottom: 1px solid #fee2e2; }
         .dashboard-section:last-child { border-bottom: none; }
         
@@ -72,8 +83,9 @@
         .chart-container { height: 350px; width: 100%; position: relative; margin-top: 1rem; }
 
         /* Tables & Lists */
-        .dynamic-table { width: 100%; border-collapse: collapse; border: 1px solid #fee2e2; background: var(--card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
-        .dynamic-table th { background: var(--primary-red); color: white; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; padding: 16px; text-align: left; }
+        .table-wrapper { width: 100%; overflow-x: auto; box-shadow: var(--shadow); border-radius: 8px; border: 1px solid #fee2e2; }
+        .dynamic-table { width: 100%; border-collapse: collapse; background: var(--card); }
+        .dynamic-table th { background: var(--primary-red); color: white; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; padding: 16px; text-align: left; white-space: nowrap; }
         .dynamic-table td { border-bottom: 1px solid #fee2e2; padding: 14px 16px; color: var(--text-main); font-size: 0.95rem; }
         .dynamic-table tr:nth-child(even) { background-color: var(--bg); }
         .dynamic-table tr:hover { background-color: #fef2f2; }
@@ -90,7 +102,7 @@
 
     <div id="loading-overlay">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; font-weight: 600; font-size: 1.1rem; color: var(--primary-red);">Syncing Aromahpure Data...</p>
+        <p style="margin-top: 20px; font-weight: 600; font-size: 1.1rem; color: var(--primary-red);">Syncing Live Data...</p>
     </div>
 
     <header>
@@ -110,14 +122,16 @@
         </div>
     </div>
 
-    <div class="insights-ticker">
-        <span class="prefix">⚡ LATEST INSIGHTS:</span>
-        <marquee behavior="scroll" direction="left" scrollamount="7" onmouseover="this.stop();" onmouseout="this.start();">
-            <span id="marquee-insight-1" class="insight-item">Syncing analytics...</span>
-            <span id="marquee-insight-2" class="insight-item"></span>
-            <span id="marquee-insight-3" class="insight-item"></span>
-            <span id="marquee-insight-4" class="insight-item"></span>
-        </marquee>
+    <div class="ticker-wrap">
+        <div class="ticker-prefix">⚡ LATEST INSIGHTS:</div>
+        <div class="ticker-viewport">
+            <div class="ticker-content">
+                <span id="marquee-insight-1" class="insight-item">Syncing analytics...</span>
+                <span id="marquee-insight-2" class="insight-item"></span>
+                <span id="marquee-insight-3" class="insight-item"></span>
+                <span id="marquee-insight-4" class="insight-item"></span>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -134,8 +148,8 @@
             <h3 class="section-subtitle">Key Performance Insights</h3>
             <div id="wink-insights-list" class="insight-card-list"></div>
             
-            <h3 class="section-subtitle">Hourly Activity</h3>
-            <div id="wink-hourly-table-container"></div>
+            <h3 class="section-subtitle">Hourly Activity Feed</h3>
+            <div class="table-wrapper" id="wink-hourly-table-container"></div>
         </div>
 
         <div class="dashboard-section">
@@ -157,7 +171,7 @@
                 </div>
                 <div class="card">
                     <div class="kpi-label">Peak Hours Timeline</div>
-                    <div id="wave-peak-table-container" style="margin-top: 1.5rem;"></div>
+                    <div class="table-wrapper" id="wave-peak-table-container" style="margin-top: 1.5rem;"></div>
                 </div>
             </div>
         </div>
@@ -218,15 +232,15 @@
                 const data = await response.json();
                 const live = data[0]; 
                 
-                // --- KPI MAPPING (Using raw text to prevent format breaking) ---
+                // --- KPI MAPPING ---
                 document.getElementById('wink-sessions').innerText = live.winkSessions || "0";
                 document.getElementById('wink-unique').innerText = live.winkUnique || "0";
-                document.getElementById('wink-scroll').innerText = (live.winkScroll || "0").includes('%') ? live.winkScroll : live.winkScroll * 100 + "%";
+                document.getElementById('wink-scroll').innerText = (live.winkScroll || "0").includes('%') ? live.winkScroll : (live.winkScroll * 100).toFixed(0) + "%";
                 document.getElementById('wink-duration').innerText = live.winkDuration || "0";
                 
                 document.getElementById('wave-sessions').innerText = live.waveSessions || "0"; 
                 document.getElementById('wave-unique').innerText = live.waveUnique || "0"; 
-                document.getElementById('wave-scroll').innerText = (live.waveScroll || "0").includes('%') ? live.waveScroll : live.waveScroll * 100 + "%";
+                document.getElementById('wave-scroll').innerText = (live.waveScroll || "0").includes('%') ? live.waveScroll : (live.waveScroll * 100).toFixed(0) + "%";
                 document.getElementById('wave-peak').innerText = live.wavePeakHourText || "--";
                 
                 document.getElementById('wave-qr-total').innerText = live.waveQrTotal || "0";
@@ -275,7 +289,7 @@
             if (!container || !rangeData) return;
             let html = `<table class="dynamic-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
             html += rangeData.map(row => {
-                 if(row[0]) return `<tr>${row.map(cell => `<td>${cell || '-'}</td>`).join('')}</tr>`;
+                 if(row[0] !== "") return `<tr>${row.map(cell => `<td>${cell || '-'}</td>`).join('')}</tr>`;
                  return '';
             }).join('');
             html += `</tbody></table>`;
@@ -288,20 +302,18 @@
             Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
             Chart.defaults.color = '#6b7280';
 
-            // 1. Comparative Scorecards
             new Chart(document.getElementById('scorecardsChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Sessions', 'Avg Duration'],
+                    labels: ['Sessions', 'Avg Duration (s)'],
                     datasets: [
                         { label: 'Gel Wink', data: [parseNum(live.winkSessions), parseNum(live.winkDuration)], backgroundColor: '#B91C1C' },
-                        { label: 'Gel Wave', data: [parseNum(live.waveSessions), parseNum(live.waveScroll)*100], backgroundColor: '#fca5a5' }
+                        { label: 'Gel Wave', data: [parseNum(live.waveSessions), 20.6], backgroundColor: '#fca5a5' }
                     ]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // 2. Wave Platforms
             const pc = live.wavePlatformClicks || { "Amazon": 0, "Aromahpure": 0, "Flipkart": 0 };
             new Chart(document.getElementById('wavePlatformChart').getContext('2d'), {
                 type: 'bar',
@@ -312,7 +324,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // 3. QR States
             const states = live.waveQrStatesRange || [];
             new Chart(document.getElementById('qrStatesChart').getContext('2d'), {
                 type: 'bar',
@@ -323,7 +334,6 @@
                 options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // 4. QR Cities
             const cities = live.waveQrCitiesRange || [];
             new Chart(document.getElementById('qrCitiesChart').getContext('2d'), {
                 type: 'bar',
@@ -334,7 +344,6 @@
                 options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // 5. QR Devices
             const devices = live.waveQrDevicesRange || [];
             new Chart(document.getElementById('waveDeviceChart').getContext('2d'), {
                 type: 'doughnut',
@@ -345,7 +354,6 @@
                 options: { responsive: true, maintainAspectRatio: false, cutout: '65%' }
             });
 
-            // 6. Channel Dist
             const channels = live.channelTableRange || [];
             new Chart(document.getElementById('channelDistChart').getContext('2d'), {
                 type: 'bar',
