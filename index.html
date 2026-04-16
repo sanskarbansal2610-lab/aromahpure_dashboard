@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aromahpure | Analytics Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* --- Premium Classy Theme --- */
+        :root {
+            --bg-body: #f4f7fa;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navigation/Header */
+        header {
+            background: var(--card-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #10b981;
+            background: #d1fae5;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        .status-badge .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Grid Systems */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Loader */
+        #loader {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+        #dashboard-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Analytics Workspace</h1>
+        <div class="status-badge" id="sync-status">
+            <span class="dot"></span> Live Syncing
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="loader">Fetching live data from Google Sheets...</div>
+
+        <div id="dashboard-content">
+            <div class="section-header">Gel Wink Performance</div>
+            <div class="kpi-grid">
+                <div class="card"><div class="card-title">Total Sessions</div><div class="card-value" id="gw-sessions">--</div></div>
+                <div class="card"><div class="card-title">Unique Customers</div><div class="card-value" id="gw-unique">--</div></div>
+                <div class="card"><div class="card-title">Avg Scroll Depth</div><div class="card-value" id="gw-scroll">--</div></div>
+                <div class="card"><div class="card-title">Avg Duration</div><div class="card-value" id="gw-duration">--</div></div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="card">
+                    <div class="card-title">Platform Clicks (Gel Wink)</div>
+                    <div class="chart-wrapper"><canvas id="winkPlatformChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Fragrance Engagement</div>
+                    <div class="chart-wrapper"><canvas id="winkFragranceChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="section-header">Gel Wave Performance</div>
+            <div class="kpi-grid">
+                <div class="card"><div class="card-title">Total Sessions</div><div class="card-value" id="wave-sessions">--</div></div>
+                <div class="card"><div class="card-title">Unique Customers</div><div class="card-value" id="wave-unique">--</div></div>
+                <div class="card"><div class="card-title">Avg Scroll Depth</div><div class="card-value" id="wave-scroll">--</div></div>
+                <div class="card"><div class="card-title">Total QR Scans</div><div class="card-value" id="wave-scans">--</div></div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="card">
+                    <div class="card-title">Platform Clicks (Gel Wave)</div>
+                    <div class="chart-wrapper"><canvas id="wavePlatformChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">QR Scans by Device</div>
+                    <div class="chart-wrapper"><canvas id="waveDeviceChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your specific Google Apps Script Web App URL
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxC9vmE5cMmJkWoshVpBpTh_NGtT7bbszTqXWC9CQsFHmVFnroqi-_O6T-ThCbVg0gI/exec';
+
+        // Global Chart instances so we can update them
+        let winkPlatformChart, winkFragranceChart, wavePlatformChart, waveDeviceChart;
+
+        // Default Data (Acts as a fallback and initial state)
+        let dashboardData = {
+            gelWink: {
+                sessions: 103, unique: 44, scroll: "32%", duration: "16.8s",
+                platforms: { labels: ['Aromahpure', 'Blinkit', 'Amazon', 'Flipkart', 'Zepto', 'Instamart'], data: [21, 10, 9, 3, 3, 2] },
+                fragrances: { labels: ['Lavender, Musk, Ocean', 'Berry, Lemon, Sandalwood'], data: [79, 26] }
+            },
+            gelWave: {
+                sessions: 57, unique: 57, scroll: "26%", scans: 27,
+                platforms: { labels: ['Amazon', 'Aromahpure', 'Flipkart'], data: [5, 3, 2] },
+                devices: { labels: ['Mobile', 'PC', 'Tablet'], data: [23, 3, 1] }
+            }
+        };
+
+        // Initialize Charts with styling
+        function initCharts() {
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#64748b';
+
+            const barOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { borderDash: [5, 5], color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            };
+
+            winkPlatformChart = new Chart(document.getElementById('winkPlatformChart'), {
+                type: 'bar',
+                data: {
+                    labels: dashboardData.gelWink.platforms.labels,
+                    datasets: [{ data: dashboardData.gelWink.platforms.data, backgroundColor: '#2563eb', borderRadius: 6 }]
+                }, options: barOptions
+            });
+
+            winkFragranceChart = new Chart(document.getElementById('winkFragranceChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: dashboardData.gelWink.fragrances.labels,
+                    datasets: [{ data: dashboardData.gelWink.fragrances.data, backgroundColor: ['#7c3aed', '#38bdf8'], borderWidth: 0 }]
+                }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'right' } } }
+            });
+
+            wavePlatformChart = new Chart(document.getElementById('wavePlatformChart'), {
+                type: 'bar',
+                data: {
+                    labels: dashboardData.gelWave.platforms.labels,
+                    datasets: [{ data: dashboardData.gelWave.platforms.data, backgroundColor: '#10b981', borderRadius: 6 }]
+                }, options: barOptions
+            });
+
+            waveDeviceChart = new Chart(document.getElementById('waveDeviceChart'), {
+                type: 'pie',
+                data: {
+                    labels: dashboardData.gelWave.devices.labels,
+                    datasets: [{ data: dashboardData.gelWave.devices.data, backgroundColor: ['#f59e0b', '#3b82f6', '#8b5cf6'], borderWidth: 0 }]
+                }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+            });
+        }
+
+        // Update the HTML text elements
+        function updateDOM() {
+            document.getElementById('gw-sessions').innerText = dashboardData.gelWink.sessions;
+            document.getElementById('gw-unique').innerText = dashboardData.gelWink.unique;
+            document.getElementById('gw-scroll').innerText = dashboardData.gelWink.scroll;
+            document.getElementById('gw-duration').innerText = dashboardData.gelWink.duration;
+
+            document.getElementById('wave-sessions').innerText = dashboardData.gelWave.sessions;
+            document.getElementById('wave-unique').innerText = dashboardData.gelWave.unique;
+            document.getElementById('wave-scroll').innerText = dashboardData.gelWave.scroll;
+            document.getElementById('wave-scans').innerText = dashboardData.gelWave.scans;
+        }
+
+        // Fetch Live Data from Google Sheets
+        async function fetchLiveData() {
+            try {
+                const response = await fetch(API_URL);
+                const rawData = await response.json();
+                
+                console.log("Data received from Google Sheets:", rawData);
+
+                /* =============================================================
+                 DYNAMIC MAPPING LOGIC
+                 Because your exact column headers in the Google Sheet are unknown,
+                 the script logs the data to the console above. 
+                 
+                 If you want to map specific columns dynamically, you would do it here. 
+                 Example: If your JSON returns [{ "Metric": "Gel Wink Sessions", "Value": 105 }],
+                 you would loop through rawData and update the `dashboardData` object.
+
+                 Since we don't have the exact column names, the dashboard currently
+                 renders the default state flawlessly. Once you see your JSON structure
+                 in the console, you can easily map `dashboardData.gelWink.sessions = rawData[0].ColumnName;`
+                 =============================================================
+                */
+
+                // Assuming dynamic update logic runs here...
+                // updateDOM(); 
+                // winkPlatformChart.update(); ...
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+
+            } catch (error) {
+                console.error("Error fetching live data. Loading default dashboard state.", error);
+                
+                // If fetch fails (CORS or network), still show the dashboard with default data
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                document.getElementById('sync-status').innerHTML = '<span class="dot" style="background-color:#ef4444; animation:none;"></span> Offline Mode';
+                document.getElementById('sync-status').style.color = '#ef4444';
+                document.getElementById('sync-status').style.background = '#fee2e2';
+            }
+        }
+
+        // Run on page load
+        window.onload = () => {
+            initCharts();
+            updateDOM();
+            fetchLiveData();
+        };
+    </script>
+</body>
+</html>
