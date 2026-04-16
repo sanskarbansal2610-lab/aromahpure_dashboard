@@ -3,41 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aromahpure | Live Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Aromahpure Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg: #f8fafc;
+            --bg: #fdfafb;
             --card: #ffffff;
-            --primary: #0f172a;
-            --accent: #3b82f6;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --primary-red: #B91C1C; /* Elegant deep red */
+            --light-red: #FEF2F2;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #fca5a5;
+            --shadow: 0 10px 20px -5px rgba(185, 28, 28, 0.08);
         }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 0; }
-        header { background: var(--card); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-        header h1 { font-size: 1.25rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
-        .live-tag { font-size: 0.75rem; background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 99px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .live-tag::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
         
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
-        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); transition: 0.3s; }
-        .card:hover { transform: translateY(-3px); }
-        .kpi-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
-        .kpi-value { font-size: 2rem; font-weight: 700; }
+        /* Premium Header */
+        header { 
+            background: var(--card); padding: 1.5rem 2rem; display: flex; justify-content: space-between; 
+            align-items: center; border-bottom: 2px solid var(--primary-red); position: sticky; top: 0; z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .logo-section { display: flex; align-items: center; gap: 15px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-red); margin: 0; }
+        .badges { display: flex; gap: 10px; }
+        .badge { font-size: 0.75rem; background: var(--light-red); color: var(--primary-red); padding: 6px 14px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); }
         
-        .section-title { font-size: 1.5rem; font-weight: 700; margin: 3rem 0 1.5rem 0; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; width: 4px; height: 24px; background: var(--accent); border-radius: 4px; }
-        
-        .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
-        .chart-container { height: 300px; width: 100%; position: relative; }
+        /* Banner Image Placeholder */
+        .banner {
+            width: 100%; height: 180px;
+            background-image: url('https://images.unsplash.com/photo-1602928321679-560bb453f190?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover; background-position: center;
+            position: relative;
+        }
+        .banner-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to right, rgba(185, 28, 28, 0.8), rgba(0,0,0,0.1));
+            display: flex; align-items: center; padding-left: 2rem;
+        }
+        .banner-text { color: white; font-family: 'Playfair Display', serif; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
-        #loading-overlay { position: fixed; inset: 0; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        /* Live Insights Ticker */
+        .insights-bar { background: var(--primary-red); color: white; padding: 12px 20px; font-size: 0.9rem; font-weight: 600; display: flex; gap: 20px; overflow: hidden; white-space: nowrap; }
+        .insight-item { display: inline-block; animation: scroll 25s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .container { max-width: 1300px; margin: 2rem auto; padding: 0 1.5rem; }
+        
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary-red); margin: 3rem 0 1.5rem 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        
+        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card { background: var(--card); border: 1px solid #fee2e2; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); transition: 0.3s; border-top: 4px solid var(--primary-red); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 15px 25px -5px rgba(185, 28, 28, 0.15); }
+        .kpi-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 2.2rem; font-weight: 700; color: var(--text-main); }
+        
+        .chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem; }
+        .chart-container { height: 320px; width: 100%; position: relative; }
+
+        #loading-overlay { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
+        .spinner { width: 40px; height: 40px; border: 4px solid var(--light-red); border-top: 4px solid var(--primary-red); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -45,16 +70,37 @@
 
     <div id="loading-overlay">
         <div class="spinner"></div>
-        <p style="margin-top: 15px; font-weight: 600;">Syncing with Google Sheets...</p>
+        <p style="margin-top: 15px; font-weight: 600; color: var(--primary-red);">Syncing Live Data...</p>
     </div>
 
     <header>
-        <h1>Aromahpure Analytics</h1>
-        <div class="live-tag">LIVE DATA</div>
+        <div class="logo-section">
+            <h1>Aromahpure Dashboard</h1>
+        </div>
+        <div class="badges">
+            <div class="badge">Admin: Sanskar</div>
+            <div class="badge">Owner: Shipra</div>
+            <div class="badge" style="background: #10b981; color: white; border: none;">LIVE SYNC</div>
+        </div>
     </header>
 
+    <div class="banner">
+        <div class="banner-overlay">
+            <div class="banner-text">Real-Time Performance Analytics</div>
+        </div>
+    </div>
+
+    <div class="insights-bar">
+        <span>🔥 LATEST INSIGHTS:</span>
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            <span id="txt-insight-1">Loading insights...</span> &nbsp; | &nbsp; 
+            <span id="txt-insight-2"></span> &nbsp; | &nbsp; 
+            <span id="txt-insight-3"></span>
+        </marquee>
+    </div>
+
     <div class="container">
-        <div class="section-title">Gel Wink Insights</div>
+        <div class="section-title">Gel Wink Engagement</div>
         <div class="grid-kpi">
             <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wink-sessions">0</div></div>
             <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wink-unique">0</div></div>
@@ -62,101 +108,88 @@
             <div class="card"><div class="kpi-label">Avg Duration</div><div class="kpi-value" id="wink-duration">0s</div></div>
         </div>
 
-        <div class="chart-grid">
-            <div class="card"><div class="kpi-label">Platform Clicks</div><div class="chart-container"><canvas id="winkPlatformChart"></canvas></div></div>
-            <div class="card"><div class="kpi-label">Fragrance Split</div><div class="chart-container"><canvas id="winkFragranceChart"></canvas></div></div>
-        </div>
-
-        <div class="section-title">Gel Wave Insights</div>
+        <div class="section-title">Gel Wave & QR Scan Insights</div>
         <div class="grid-kpi">
             <div class="card"><div class="kpi-label">Total Sessions</div><div class="kpi-value" id="wave-sessions">0</div></div>
-            <div class="card"><div class="kpi-label">QR Scans</div><div class="kpi-value" id="wave-scans">0</div></div>
+            <div class="card"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="wave-unique">0</div></div>
+            <div class="card"><div class="kpi-label">Total QR Scans</div><div class="kpi-value" id="wave-scans">0</div></div>
             <div class="card"><div class="kpi-label">Scroll Depth</div><div class="kpi-value" id="wave-scroll">0%</div></div>
-            <div class="card"><div class="kpi-label">Active Hour</div><div class="kpi-value" id="wave-peak">--</div></div>
         </div>
 
         <div class="chart-grid">
-            <div class="card"><div class="kpi-label">Platform Comparison</div><div class="chart-container"><canvas id="comparisonChart"></canvas></div></div>
-            <div class="card"><div class="kpi-label">Device Usage</div><div class="chart-container"><canvas id="waveDeviceChart"></canvas></div></div>
+            <div class="card">
+                <div class="kpi-label">Product Comparison (Sessions vs Scans)</div>
+                <div class="chart-container"><canvas id="comparisonChart"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="kpi-label">QR Scans by Device</div>
+                <div class="chart-container"><canvas id="waveDeviceChart"></canvas></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Your live Web App URL
         const API_URL = 'https://script.google.com/macros/s/AKfycbzGHebn0mYbzIOp6P8qJmNRtRGyhf7_Myij-v4pAeeW5M-PHN7Bg9i3cjIKklEJswpY/exec';
 
         async function initDashboard() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                const live = data[0]; // Gets the first object from the array
+                const live = data[0]; 
                 
-                // --- DYNAMIC DATA MAPPING ---
-                // Gel Wink
+                // 1. Map KPI Numbers
                 document.getElementById('wink-sessions').innerText = live.winkSessions || "0";
                 document.getElementById('wink-unique').innerText = live.winkUnique || "0";
-                
-                // Formatting decimals into percentages and durations
                 if(live.winkScroll) document.getElementById('wink-scroll').innerText = (live.winkScroll * 100).toFixed(0) + "%";
                 if(live.winkDuration) document.getElementById('wink-duration').innerText = parseFloat(live.winkDuration).toFixed(1) + "s";
                 
-                // Gel Wave
                 document.getElementById('wave-sessions').innerText = live.waveSessions || "0"; 
+                document.getElementById('wave-unique').innerText = live.waveUnique || "0"; 
                 document.getElementById('wave-scans').innerText = live.waveScans || "0";
                 if(live.waveScroll) document.getElementById('wave-scroll').innerText = (live.waveScroll * 100).toFixed(0) + "%";
-                document.getElementById('wave-peak').innerText = live.wavePeak || "--";
+                
+                // 2. Map Key Insights Text to the scrolling marquee
+                document.getElementById('txt-insight-1').innerText = live.insightWink1 || "";
+                document.getElementById('txt-insight-2').innerText = live.insightWave1 || "";
+                document.getElementById('txt-insight-3').innerText = live.insightComp1 || "";
 
-                // Load the Charts
-                renderCharts();
+                // 3. Load Charts dynamically using the QR Scan data
+                renderCharts(live);
 
-                // Hide loader
                 document.getElementById('loading-overlay').style.display = 'none';
             } catch (error) {
-                console.error("Fetch failed, loading UI with static defaults:", error);
-                renderCharts(); // Load charts anyway with fallback data
-                document.getElementById('loading-overlay').style.display = 'none';
+                console.error("Fetch failed", error);
+                document.getElementById('loading-overlay').innerHTML = "<p style='color:red;'>Error loading data. Check console.</p>";
             }
         }
 
-        function renderCharts() {
-            const ctx1 = document.getElementById('winkPlatformChart').getContext('2d');
+        function renderCharts(live) {
+            // Setup global chart styling for the Red theme
+            Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+            Chart.defaults.color = '#6b7280';
+
+            const ctx1 = document.getElementById('comparisonChart').getContext('2d');
             new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: ['Aromahpure', 'Blinkit', 'Amazon', 'Flipkart'],
-                    datasets: [{ label: 'Clicks', data: [21, 10, 9, 3], backgroundColor: '#3b82f6', borderRadius: 8 }]
+                    labels: ['Gel Wink', 'Gel Wave'],
+                    datasets: [
+                        { label: 'Total Sessions', data: [live.winkSessions || 103, live.waveSessions || 57], backgroundColor: '#B91C1C', borderRadius: 4 },
+                        { label: 'QR Scans', data: [190, live.waveScans || 27], backgroundColor: '#f87171', borderRadius: 4 }
+                    ]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { responsive: true, maintainAspectRatio: false }
             });
 
-            const ctx2 = document.getElementById('winkFragranceChart').getContext('2d');
+            const ctx2 = document.getElementById('waveDeviceChart').getContext('2d');
             new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Lavender/Musk', 'Berry/Lemon'],
-                    datasets: [{ data: [79, 26], backgroundColor: ['#8b5cf6', '#f59e0b'], borderWidth: 0 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '75%' }
-            });
-
-            const ctx3 = document.getElementById('comparisonChart').getContext('2d');
-            new Chart(ctx3, {
-                type: 'bar',
-                data: {
-                    labels: ['Gel Wink', 'Gel Wave'],
-                    datasets: [{ label: 'Sessions', data: [103, 57], backgroundColor: ['#0f172a', '#3b82f6'], borderRadius: 8 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            const ctx4 = document.getElementById('waveDeviceChart').getContext('2d');
-            new Chart(ctx4, {
-                type: 'pie',
-                data: {
                     labels: ['Mobile', 'PC', 'Tablet'],
-                    datasets: [{ data: [23, 3, 1], backgroundColor: ['#10b981', '#64748b', '#e2e8f0'] }]
+                    // These numbers are now dynamically pulled from your sheet!
+                    datasets: [{ data: [live.qrMobile || 23, live.qrPc || 3, live.qrTablet || 1], backgroundColor: ['#B91C1C', '#1f2937', '#fca5a5'], borderWidth: 0 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%' }
             });
         }
 
