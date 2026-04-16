@@ -29,7 +29,7 @@
         .logo-section { display: flex; align-items: center; gap: 15px; }
         header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-red); margin: 0; }
         .badges { display: flex; gap: 10px; }
-        .badge { font-size: 0.8rem; background: var(--light-red); color: var(--primary-red); padding: 8px 16px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); }
+        .badge { font-size: 0.8rem; background: var(--light-red); color: var(--primary-red); padding: 8px 16px; border-radius: 99px; font-weight: 700; border: 1px solid var(--border); cursor: help; }
         
         /* Banner - Updated to Reed Diffuser / Candle aesthetic */
         .banner {
@@ -109,10 +109,10 @@
         <div class="logo-section">
             <h1>Aromahpure Workspace</h1>
         </div>
-         <div class="badges">
+        <div class="badges">
             <div class="badge" title="Designation: Even i dont know :'(">Admin: Sanskar</div>
             <div class="badge" title="Designation: Marketing Head">Owner: Shipra</div>
-            <div class="badge" style="background: #10b981; color: white; border: none;">LIVE SYNC</div>
+            <div class="badge" style="background: #10b981; color: white; border: none; cursor: default;">LIVE SYNC</div>
         </div>
     </header>
 
@@ -329,9 +329,15 @@
                 type: 'bar',
                 data: {
                     labels: states.map(r => r[0]),
-                    datasets: [{ label: 'Scans', data: states.map(r => parseNum(r[1])), backgroundColor: '#B91C1C' }]
+                    datasets: [{ label: 'Scans', data: states.map(r => parseNum(r[1])), backgroundColor: '#B91C1C', borderRadius: 4 }]
                 },
-                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { 
+                    indexAxis: 'y', 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { x: { suggestedMax: 6, ticks: { precision: 0 } } }
+                }
             });
 
             const cities = live.waveQrCitiesRange || [];
@@ -339,9 +345,15 @@
                 type: 'bar',
                 data: {
                     labels: cities.map(r => r[0]),
-                    datasets: [{ label: 'Scans', data: cities.map(r => parseNum(r[1])), backgroundColor: '#f87171' }]
+                    datasets: [{ label: 'Scans', data: cities.map(r => parseNum(r[1])), backgroundColor: '#f87171', borderRadius: 4 }]
                 },
-                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { 
+                    indexAxis: 'y', 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { x: { suggestedMax: 6, ticks: { precision: 0 } } }
+                }
             });
 
             const devices = live.waveQrDevicesRange || [];
